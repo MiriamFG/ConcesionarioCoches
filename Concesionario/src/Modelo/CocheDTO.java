@@ -7,6 +7,7 @@ public class CocheDTO {
     private double precio;
     private int anho;
     private int kilometros;
+    private boolean vendido;
 
     //Getters y Setters
 
@@ -61,7 +62,7 @@ public class CocheDTO {
 
     //Constructor
 
-    public CocheDTO(int kilometros, int anho, double precio, String matricula, String modelo, String marca) {
+    public CocheDTO(String marca, String modelo, String matricula, double precio, int anho, int kilometros) {
         this.kilometros = kilometros;
         this.anho = anho;
         this.precio = precio;
