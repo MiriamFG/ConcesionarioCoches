@@ -9,6 +9,7 @@ public class Program {
         ConcessContr concessContr = new ConcessContr(vista);
 
         concessContr.generarCoches();
+        concessContr.generarClientes();
 
 
     }

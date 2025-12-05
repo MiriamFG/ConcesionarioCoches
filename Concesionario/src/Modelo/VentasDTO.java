@@ -4,36 +4,11 @@ import java.util.Date;
 
 public class VentasDTO {
     private int idVenta;
-    private String cliente;
-    private String coche;
+    private ClientesDTO cliente;
+    private CocheDTO coche;
     private Date fecha;
-    private double precioVenta;
 
     //Getters y Setters
-
-    public int getIdVenta() {
-        return idVenta;
-    }
-
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
-    }
-
-    public String getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
-    }
-
-    public String getCoche() {
-        return coche;
-    }
-
-    public void setCoche(String coche) {
-        this.coche = coche;
-    }
 
     public Date getFecha() {
         return fecha;
@@ -43,22 +18,38 @@ public class VentasDTO {
         this.fecha = fecha;
     }
 
-    public double getPrecioVenta() {
-        return precioVenta;
+    public CocheDTO getCoche() {
+        return coche;
     }
 
-    public void setPrecioVenta(double precioVenta) {
-        this.precioVenta = precioVenta;
+    public void setCoche(CocheDTO coche) {
+        this.coche = coche;
+    }
+
+    public ClientesDTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClientesDTO cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getIdVenta() {
+        return idVenta;
+    }
+
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
     }
 
 
     //Constructor
 
-    public VentasDTO(int idVenta, String cliente, String coche, Date fecha, double precioVenta) {
-        this.idVenta = idVenta;
-        this.cliente = cliente;
-        this.coche = coche;
+
+    public VentasDTO(Date fecha, CocheDTO coche, ClientesDTO cliente, int idVenta) {
         this.fecha = fecha;
-        this.precioVenta = precioVenta;
+        this.coche = coche;
+        this.cliente = cliente;
+        this.idVenta = idVenta;
     }
 }

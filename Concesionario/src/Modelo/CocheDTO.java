@@ -59,15 +59,22 @@ public class CocheDTO {
         this.kilometros = kilometros;
     }
 
+    public boolean isVendido() {
+        return vendido;
+    }
 
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
+    }
     //Constructor
 
-    public CocheDTO(String marca, String modelo, String matricula, double precio, int anho, int kilometros) {
+    public CocheDTO(String marca, String modelo, String matricula, double precio, int anho, int kilometros, boolean vendido) {
         this.kilometros = kilometros;
         this.anho = anho;
         this.precio = precio;
         this.matricula = matricula;
         this.modelo = modelo;
         this.marca = marca;
+        this.vendido = vendido;
     }
 }

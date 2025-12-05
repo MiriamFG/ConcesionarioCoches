@@ -12,12 +12,35 @@ public class SimpleViewContr {
 
     static Scanner sc = new Scanner(System.in);
 
+    //Registar Cliente
+    public String pedirDni(){
+        System.out.println("Cuál es el dni del cliente?");
+        String dni = sc.nextLine();
+        return dni;
+    }
+
+    public String pedirNombre(){
+        System.out.println("Cómo se llama el cliente?");
+        String nombre = sc.nextLine();
+        return nombre;
+    }
+
+    public String pedirTelefono(){
+        System.out.println("Como es el teléfono del cliente");
+        String telf = sc.nextLine();
+        return telf;
+    }
 
 
 
+    //Mensajes añadir
     public void mostrarMensaje (String msg){
         System.out.println(msg);
     }
+
+    //Mensaje error
+    public void clienteRepetido(String msg) {
+        System.err.println(msg);    }
 
 
 
@@ -61,11 +84,13 @@ public class SimpleViewContr {
     }
     
     
-    public void mostrarCoches(ArrayList<CocheDTO> coches){
-        for (CocheDTO car : coches) {
-            System.out.println(coches);
+    public void mostrarCoches(ArrayList<CocheDTO > coches){
+
+        System.out.println(coches);
             
-        }
+
     }
-    
+
+
+
 }
