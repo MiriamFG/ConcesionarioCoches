@@ -1,8 +1,6 @@
 package Controlador;
 
-import Modelo.ClientesDTO;
-import Modelo.CocheDTO;
-import Modelo.VentasDTO;
+import Modelo.*;
 
 import View.SimpleViewContr;
 
@@ -15,9 +13,60 @@ public class ConcessContr {
 
     private List<CocheDTO> coches = new ArrayList<>();
     private List<ClientesDTO> clientes = new ArrayList<>();
+    private List<VentasDTO> ventas = new ArrayList<>();
 
 
     public void run(){
+        while(true){
+            TOpcionesMenu op = vista.mostrarMenu();
+
+            if(op == TOpcionesMenu.ADD){
+                anadirCoche();
+            }
+
+            if(op == TOpcionesMenu.SHOW){
+                mostrarCoches();
+            }
+
+            if(op == TOpcionesMenu.SEARCH){
+                //submenu SEARCH
+                TOpcionesSearchMenu opc = vista.mostrarMenuBusqueda();
+                if(opc == TOpcionesSearchMenu.BY_BRAND){
+
+                }
+
+                if(opc == TOpcionesSearchMenu.BY_PRICE){
+
+                }
+
+                if(opc == TOpcionesSearchMenu.BY_YEAR){
+
+                }
+
+                if(opc == TOpcionesSearchMenu.EXIT){
+                    continue;
+                }
+            }
+
+            if(op == TOpcionesMenu.REGISTERGUEST){
+                registarCliente();
+            }
+
+            if(op == TOpcionesMenu.REGISTERSALE){
+                registrarVenta();
+            }
+
+            if(op == TOpcionesMenu.SALELIST){
+                listarVentas();
+
+            }
+
+            if(op == TOpcionesMenu.EXIT){
+                vista.exit();
+                return;
+            }
+
+        }
 
     }
 
@@ -54,12 +103,62 @@ public class ConcessContr {
         }
     }
 
-    public void registrarVenta(){
-        registarCliente();
-        mostrarCoches();
+    private ClientesDTO buscarCliente(String dni){
+        for(ClientesDTO c : clientes){
+            if(c.getDni().equals(dni)){
+                return c;
+            }
+        }
+        return null;
+    }
 
+
+    public void registrarVenta() {
+        String dni = vista.pedirDni();
+        ClientesDTO cliente = buscarCliente(dni);
+
+        if (cliente == null) {
+            vista.mostrarMensaje("El cliente no existe, necesitamos crearlo");
+            cliente = new ClientesDTO(dni, vista.pedirNombre(), vista.pedirTelefono());
+            clientes.add(cliente);
+
+        }
+
+        mostrarCoches();
+        String matricula = vista.pedirMatricula();
+
+        CocheDTO coche = null;
+        for (CocheDTO c : coches) {
+            if (c.getMatricula().equals(matricula) && !coche.isVendido()) {
+                coche = c;
+                break;
+            }
+        }
+        if(coche == null){
+            vista.mostrarMensaje("Lo sentimos, coche no encontrado y/o vendido");
+        }
+
+        VentasDTO venta = new VentasDTO(cliente, coche);//por qué sale cliente en rojo?
+        coche.setVendido(true);
+        ventas.add(venta);
+
+        vista.mostrarMensaje("Venta registrada con éxito!" + cliente.getNombre() + coche.getMatricula());
 
     }
+
+    public void listarVentas() {
+
+        if (ventas.isEmpty()){
+            vista.mostrarMensaje("No se registraron ventas aún");
+        return;
+    }
+        vista.mostrarVentas(ventas);
+
+    }
+
+
+
+
 
 
 
@@ -84,6 +183,5 @@ public class ConcessContr {
     public ConcessContr(SimpleViewContr vista) {
         this.vista = vista;
     }
-
 
 }

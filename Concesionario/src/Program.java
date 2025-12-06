@@ -11,6 +11,10 @@ public class Program {
         concessContr.generarCoches();
         concessContr.generarClientes();
 
+        vista.mostrarMenu();
+        vista.mostrarMenuBusqueda();
+        //no funciona como debería
+
 
     }
 }

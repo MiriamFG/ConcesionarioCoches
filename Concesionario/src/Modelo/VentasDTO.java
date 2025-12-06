@@ -43,7 +43,8 @@ public class VentasDTO {
     }
 
 
-    //Constructor
+
+//Constructor
 
 
     public VentasDTO(Date fecha, CocheDTO coche, ClientesDTO cliente, int idVenta) {
