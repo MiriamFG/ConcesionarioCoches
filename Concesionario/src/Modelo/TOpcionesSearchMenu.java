@@ -1,18 +1,18 @@
 package Modelo;
 
 public enum TOpcionesSearchMenu {
-    BY_BRAND(3.1, "Buscar por marca"), BY_PRICE (3.2, "Buscar por precio"), BY_YEAR(3.3, "Buscar por año"), EXIT(3.4, "Volver al menú principal");
+    BY_BRAND(1, "Buscar por marca"), BY_PRICE (2, "Buscar por precio"), BY_YEAR(3, "Buscar por año"), EXIT(4, "Volver al menú principal");
 
-    private double opDouble;
+    private int opInt;
     private String opString;
 
-    TOpcionesSearchMenu(double opDouble, String opString) {
-        this.opDouble = opDouble;
+    TOpcionesSearchMenu(int opInt, String opString) {
+        this.opInt = opInt;
         this.opString = opString;
     }
 
-    public double getOpDouble() {
-        return opDouble;
+    public int getOpInt() {
+        return opInt;
     }
 
     public String getOpString() {

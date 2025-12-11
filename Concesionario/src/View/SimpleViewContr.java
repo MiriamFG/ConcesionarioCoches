@@ -1,6 +1,5 @@
 package View;
 
-import Controlador.ConcessContr;
 import Modelo.*;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.Scanner;
 public class SimpleViewContr {
 
     static Scanner sc = new Scanner(System.in);
+
     //Mostrar menú
 
     public TOpcionesMenu mostrarMenu(){
@@ -36,7 +36,7 @@ public class SimpleViewContr {
         TOpcionesSearchMenu[] opcionesSearch = TOpcionesSearchMenu.values();
 
         for(TOpcionesSearchMenu op : opcionesSearch){
-            System.out.println(op.getOpDouble() + "." + op.getOpString());
+            System.out.println(op.getOpInt() + "." + op.getOpString());
         }
 
         int opUsuario;
@@ -124,9 +124,11 @@ public class SimpleViewContr {
     }
     
     
-    public void mostrarCoches(ArrayList<CocheDTO > coches){
+    public void mostrarCoches(ArrayList<CocheDTO> coches){
+        for (int i = 0; i < coches.size(); i++) {
+            System.out.println((i + 1) + coches.get(i).toString());
+        }
 
-        System.out.println(coches);
 
     }
 
@@ -134,8 +136,32 @@ public class SimpleViewContr {
         mostrarMensaje("Muchas gracias por tu visita, hasta la próxima");
     }
 
+    public int pedirBuscarAnho(){
+        System.out.println("Por qué año quieres buscar?");
+        int year = sc.nextInt();
+        return year;
+    }
+
+    public String pedirBuscarMarca(){
+        System.out.println("Por qué marca quieres buscar?");
+        String marca = sc.nextLine();
+        return marca;
+    }
+
+    public double pedirbuscarMinPrecio() {
+        System.out.println("Introduce el precio mínimo");
+        double min = sc.nextDouble();
+        return min;
+    }
+
+    public double pedirbuscarMaxPrecio(){
+        System.out.println("Introduce el precio máximo");
+        double max = sc.nextDouble();
+        return max;
+    }
+
     public void mostrarVentas(List<VentasDTO> ventas) {
-        System.out.println("VENTAS");
+        System.out.println("========= VENTAS =======");
         for(VentasDTO v : ventas){
             System.out.println(
                     "Cliente" + v.getCliente().getNombre() + "(" + v.getCliente().getDni() + "(" +

@@ -39,4 +39,8 @@ public class ClientesDTO {
         this.nombre = nombre;
         this.telefono = telefono;
     }
+
+    public String toString(){
+        return ": Dni: " + dni + "\n" + "Nombre:" + nombre + "\n" + "Teléfono: " + telefono;
+    }
 }

@@ -47,10 +47,15 @@ public class VentasDTO {
 //Constructor
 
 
-    public VentasDTO(Date fecha, CocheDTO coche, ClientesDTO cliente, int idVenta) {
-        this.fecha = fecha;
+    public VentasDTO(CocheDTO coche, ClientesDTO cliente, int idVenta) {
+        this.fecha = new Date();
         this.coche = coche;
         this.cliente = cliente;
         this.idVenta = idVenta;
     }
+
+    public String toString(){
+        return ": ID: " + idVenta + "\n" + "Coche:" + coche + "\n" + "Cliente: " + cliente + "\n" + "Fecha: " + fecha;
+    }
+
 }
