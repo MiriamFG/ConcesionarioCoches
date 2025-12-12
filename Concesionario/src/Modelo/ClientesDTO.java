@@ -41,6 +41,6 @@ public class ClientesDTO {
     }
 
     public String toString(){
-        return ": Dni: " + dni + "\n" + "Nombre:" + nombre + "\n" + "Teléfono: " + telefono;
+        return "Dni: " + dni + "\n" + "Nombre:" + nombre + "\n" + "Teléfono: " + telefono + "\n";
     }
 }
