@@ -44,9 +44,7 @@ public class VentasDTO {
 
 
 
-//Constructor
-
-
+    //Constructor
     public VentasDTO(CocheDTO coche, ClientesDTO cliente, int idVenta) {
         this.fecha = new Date();
         this.coche = coche;

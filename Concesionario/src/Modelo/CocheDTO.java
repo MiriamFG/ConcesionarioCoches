@@ -10,7 +10,6 @@ public class CocheDTO {
     private boolean vendido;
 
     //Getters y Setters
-
     public String getMarca() {
         return marca;
     }
@@ -66,8 +65,8 @@ public class CocheDTO {
     public void setVendido(boolean vendido) {
         this.vendido = vendido;
     }
-    //Constructor
 
+    //Constructor
     public CocheDTO(String marca, String modelo, String matricula, double precio, int anho, int kilometros, boolean vendido) {
         this.kilometros = kilometros;
         this.anho = anho;
@@ -78,7 +77,7 @@ public class CocheDTO {
         this.vendido = vendido;
     }
     public String toString(){
-        return ": Marca: " + marca + ", "  + "Modelo:" + modelo + ", " + "Matricula: " + matricula + ", "  + "Precio: " + precio + ", "  + "Año: " + anho + ", "  + "Kilómetros: " + kilometros + ", " + "\n";
+        return "Marca: " + marca + "  ||  "  + "Modelo:" + modelo + "  ||  " + "Matricula: " + matricula + "  ||  "  + "Precio: " + precio + "  ||  "  + "Año: " + anho + "  ||  "  + "Kilómetros: " + kilometros + "  ||  " + "\n";
     }
 
 }

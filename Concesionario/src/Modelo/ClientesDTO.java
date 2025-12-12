@@ -6,7 +6,6 @@ public class ClientesDTO {
     private String telefono;
 
     //Getters y Setters
-
     public String getDni() {
         return dni;
     }
@@ -33,7 +32,6 @@ public class ClientesDTO {
 
 
     //Constructor
-
     public ClientesDTO(String dni, String nombre, String telefono) {
         this.dni = dni;
         this.nombre = nombre;
@@ -41,6 +39,6 @@ public class ClientesDTO {
     }
 
     public String toString(){
-        return "Dni: " + dni + "\n" + "Nombre:" + nombre + "\n" + "Teléfono: " + telefono + "\n";
+        return "Dni: " + dni + "\n" + "===================" + "\n" + "Nombre:" + nombre + "\n" + "===================" + "\n" + "Teléfono: " + telefono + "\n" + "===================";
     }
 }

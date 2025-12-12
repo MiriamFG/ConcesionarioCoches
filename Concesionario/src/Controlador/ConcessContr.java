@@ -22,7 +22,7 @@ public class ConcessContr {
     public void run(){
         while(true){
             TOpcionesMenu op = vista.mostrarMenu();
-            //try catch
+
             if(op == TOpcionesMenu.ADD){
                 anadirCoche();
             }
@@ -116,8 +116,6 @@ public class ConcessContr {
                 break;
             }
         }
-
-
 
         CocheDTO coche = new CocheDTO(marca, vista.pedirModelo(), matricula, precio, anho, vista.pedirKilometros(), false);
         coches.add(coche);
@@ -228,7 +226,7 @@ public class ConcessContr {
         if(!clienteRepetido){
             ClientesDTO cliente = new ClientesDTO(dni, vista.pedirNombre(), vista.pedirTelefono());
             clientes.add(cliente);
-            vista.mostrarMensaje(cliente +  "añadido" );
+            vista.mostrarMensaje(cliente +  " " );
         }
     }
 

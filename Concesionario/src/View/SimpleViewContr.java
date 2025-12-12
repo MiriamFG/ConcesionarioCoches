@@ -3,6 +3,7 @@ package View;
 import Modelo.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,19 +21,28 @@ public class SimpleViewContr {
 
         TOpcionesMenu[] opciones =TOpcionesMenu.values();
 
+        System.out.println("Selecciona una opción");
+
         for (TOpcionesMenu opcion : opciones) {
             System.out.println(opcion.getOpInt() + ". " + opcion.getOpText());
         }
 
         int opUsuario;
         while (true){
-        opUsuario = sc.nextInt();
-        sc.nextLine();
-            for (TOpcionesMenu opcion : opciones) {
-                if (opcion.getOpInt() == opUsuario)
-                    return opcion;
-            }
+            try{
+                opUsuario = sc.nextInt();
+                sc.nextLine();
+                for (TOpcionesMenu opcion : opciones) {
+                    if (opcion.getOpInt() == opUsuario)
+                        return opcion;
+                }
                 System.err.println("Opcion Incorrecta");
+
+            } catch (InputMismatchException e) {
+                System.err.println("Introduce un número");
+                sc.nextLine();
+            }
+
         }
     }
 
@@ -49,12 +59,18 @@ public class SimpleViewContr {
 
         int opUsuario;
         while (true){
-            opUsuario = sc.nextInt();
-            sc.nextLine();
-            if(opUsuario >= 1 && opUsuario <= opcionesSearch.length){
-                return opcionesSearch[opUsuario - 1];
+            try{
+                opUsuario = sc.nextInt();
+                sc.nextLine();
+                if(opUsuario >= 1 && opUsuario <= opcionesSearch.length){
+                    return opcionesSearch[opUsuario - 1];
+                }
+                System.err.println("Opcion Incorrecta");
+            }catch (InputMismatchException e){
+                System.err.println("Introduce un número");
+                sc.nextLine();
             }
-            System.err.println("Opcion Incorrecta");
+
         }
 
     }
