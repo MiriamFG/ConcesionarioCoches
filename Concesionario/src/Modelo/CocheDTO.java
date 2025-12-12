@@ -78,7 +78,7 @@ public class CocheDTO {
         this.vendido = vendido;
     }
     public String toString(){
-        return ": Marca: " + marca  + "Modelo:" + modelo + "Matricula: " + matricula  + "Precio: " + precio  + "Año: " + anho  + "Kilómetros: " + kilometros + "\n";
+        return ": Marca: " + marca + ", "  + "Modelo:" + modelo + ", " + "Matricula: " + matricula + ", "  + "Precio: " + precio + ", "  + "Año: " + anho + ", "  + "Kilómetros: " + kilometros + ", " + "\n";
     }
 
 }

@@ -12,10 +12,5 @@ public class Program {
         concessContr.generarClientes();
 
         concessContr.run();
-
-
-
-
-
     }
 }

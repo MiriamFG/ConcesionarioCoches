@@ -5,9 +5,7 @@ import Modelo.*;
 import View.SimpleViewContr;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ConcessContr {
 
@@ -16,8 +14,11 @@ public class ConcessContr {
     private List<CocheDTO> coches = new ArrayList<>();
     private List<ClientesDTO> clientes = new ArrayList<>();
     private List<VentasDTO> ventas = new ArrayList<>();
+    private ArrayList<CocheDTO> cochesNoVendidos = new ArrayList<>();
 
-
+    /**
+     * Determina las acciones que debe hacer el menú cuando el usuario selecciona una opción.
+     */
     public void run(){
         while(true){
             TOpcionesMenu op = vista.mostrarMenu();
@@ -31,11 +32,9 @@ public class ConcessContr {
             }
 
             if(op == TOpcionesMenu.SEARCH){
-                //submenu SEARCH
                 TOpcionesSearchMenu opc = vista.mostrarMenuBusqueda();
                 if(opc == TOpcionesSearchMenu.BY_BRAND){
                     buscarPorMarca(vista.pedirBuscarMarca());
-
                 }
 
                 if(opc == TOpcionesSearchMenu.BY_PRICE){
@@ -72,22 +71,78 @@ public class ConcessContr {
             }
         }
     }
+
+    /**
+     * Añade un coche y verifica que los datos obligatorios sean cubiertos por el usuario
+     */
     public void anadirCoche(){
-        CocheDTO coche = new CocheDTO(vista.pedirMarca(), vista.pedirModelo(), vista.pedirMatricula(), vista.pedirPrecio(), vista.pedirAnho(), vista.pedirKilometros(), false);
+        String matricula = null;
+        String marca = null;
+        double precio;
+        int anho;
+
+        while(true){
+            marca = vista.pedirMarca();
+            if(marca.equals("")){
+                vista.errorMensaje("Introduce una marca por favor");
+            }else{
+                break;
+            }
+        }
+
+        while (true){
+            matricula = vista.pedirMatricula();
+            if(matricula.equals("")){
+                vista.errorMensaje("Introduce una matrícula por favor");
+            }else{
+                break;
+            }
+        }
+
+        while (true){
+            anho = vista.pedirAnho();
+            if(anho >= 2026){
+                vista.errorMensaje("Introduce una año lógico");
+            }else{
+                break;
+            }
+        }
+
+        while (true){
+            precio = vista.pedirPrecio();
+            if(precio <= 0){
+                vista.errorMensaje("Ambos sabemos que no me lo vas a vender gratis");
+            }else{
+                break;
+            }
+        }
+
+
+
+        CocheDTO coche = new CocheDTO(marca, vista.pedirModelo(), matricula, precio, anho, vista.pedirKilometros(), false);
         coches.add(coche);
-        vista.mostrarMensaje(coche + "añadido" ); //muestra un codigo raro
+        vista.mostrarMensaje(coche + "añadido" );
     }
 
-    public void mostrarCoches(){
-        ArrayList<CocheDTO> cochesNoVendidos = new ArrayList<>();
+    /**
+     * Muestra los coches NO vendidos
+     * @return coches no vendidos
+     */
+    public ArrayList<CocheDTO> mostrarCoches(){
+
         for(CocheDTO c : coches){
             if(!c.isVendido()){
                 cochesNoVendidos.add(c);
             }
         }
         vista.mostrarCoches(cochesNoVendidos);
+        return cochesNoVendidos;
     }
 
+    /**
+     * Busca los coches por marca
+     * @param marca
+     */
     public void buscarPorMarca(String marca){
 
         boolean encontrado = false;
@@ -107,6 +162,10 @@ public class ConcessContr {
         }
     }
 
+    /**
+     * Busca los coches por año
+     * @param anho
+     */
     public void buscarPorAnho(int anho) {
 
         boolean encontrado = false;
@@ -127,6 +186,11 @@ public class ConcessContr {
         }
     }
 
+    /**
+     * Busca los coches por precio por parámetros minimo y máximo
+     * @param min
+     * @param max
+     */
     public void buscarPorPrecio(double min, double max) {
 
         boolean encontrado = false;
@@ -148,13 +212,16 @@ public class ConcessContr {
         }
     }
 
+    /**
+     * Registra un cliente
+     */
     public void registarCliente(){
         String dni = vista.pedirDni();
         boolean clienteRepetido = false;
 
         for (ClientesDTO c : clientes) {
             if(c.getDni().equals(dni)){
-                vista.clienteRepetido("cliente repetido"); //no funciona
+                vista.errorMensaje("cliente repetido"); //no funciona
                 clienteRepetido = true;
             }
         }
@@ -165,6 +232,9 @@ public class ConcessContr {
         }
     }
 
+    /**
+     * Busca un cliente por DNI
+     */
     private ClientesDTO buscarCliente(String dni){
         for(ClientesDTO c : clientes){
             if(c.getDni().equals(dni)){
@@ -174,51 +244,61 @@ public class ConcessContr {
         return null;
     }
 
+    /**
+     * Crea una venta, primero busca si el cliente está o no, muestra coches para que el usuario seleccione
+     * luego, crea la venta
+     */
     public void registrarVenta() {
         String dni = vista.pedirDni();
         ClientesDTO cliente = buscarCliente(dni);
+        int numSelect;
+        CocheDTO cocheSelect = null;
+        int idVenta;
 
         if (cliente == null) {
-            vista.mostrarMensaje("El cliente no existe, necesitamos crearlo");
+            vista.errorMensaje("El cliente no existe, necesitamos crearlo");
+            vista.mostrarMensaje("");
             cliente = new ClientesDTO(dni, vista.pedirNombre(), vista.pedirTelefono());
             clientes.add(cliente);
         }
 
-        mostrarCoches();
-        String matricula = vista.mostrarCoches();
+        cochesNoVendidos = mostrarCoches();
 
-        CocheDTO coche = null;
-        for (CocheDTO c : coches) {
-            if (c.getMatricula().equals(matricula) && !coche.isVendido()) {
-                coche = c;
+        while(true){
+            numSelect = vista.selecCoche();
+
+            if(numSelect < 1 || numSelect > coches.size()){
+                vista.errorMensaje("Opción incorrecta");
+            }else{
                 break;
             }
         }
-        if(coche == null){
-            vista.mostrarMensaje("Lo sentimos, coche no encontrado y/o vendido");
-        }
+         idVenta = ventas.size() + 1;
 
-        int idVenta = ventas.size() + 1;
+        cocheSelect = coches.get(numSelect - 1);
+        coches.get(numSelect -1).setVendido(true);
+        ventas.add(new VentasDTO(cocheSelect,cliente,idVenta));
 
-        VentasDTO venta = new VentasDTO(coche, cliente, idVenta);
-        coche.setVendido(true);
-        ventas.add(venta);
 
-        vista.mostrarMensaje("Venta registrada con éxito!" + cliente.getNombre() + coche.getMatricula());
+        vista.mostrarMensaje("Muchas gracias!");
 
     }
 
+    /**
+     * Muestra las ventas
+     */
     public void listarVentas() {
 
         if (ventas.isEmpty()){
-            vista.mostrarMensaje("No se registraron ventas aún");
-        return;
+            vista.errorMensaje("No se registraron ventas aún");
+        }else{
+            vista.mostrarVentas(ventas);
+        }
     }
-        vista.mostrarVentas(ventas);
 
-    }
-
-    //coches iniciales
+    /**
+     * Listado de coches iniciales
+     */
     public void generarCoches(){
         coches.add(new CocheDTO("Ford", "Focus", "1111AAA", 10000, 2015, 12187, false));
         coches.add(new CocheDTO("Audi", "A3", "2222BBB", 30000, 2010, 10000, false));
@@ -228,13 +308,14 @@ public class ConcessContr {
         coches.add(new CocheDTO("Renault", "Clio", "6666FFF", 2000, 2005, 280900, false));
     }
 
-    //clientes iniciales
+    /**
+     * Listado de clientes inciales
+     */
     public void generarClientes(){
         clientes.add(new ClientesDTO("11111111A", "Pepe", "+34 986 337 777"));
         clientes.add(new ClientesDTO("22222222B", "Juana", "+34 986 333 333"));
 
     }
-
 
     public ConcessContr(SimpleViewContr vista) {
         this.vista = vista;
